@@ -118,7 +118,8 @@ class MultiModalEncoder(BaseEncoder):
     ...     'text': 'all-MiniLM-L6-v2',
     ...     'tabular': 'passthrough',
     ... })
-    >>> data = {'text': ["hello", "world"], 'tabular': np.array([[1, 2], [3, 4]])}
+    >>> data = {'text': ["hello", "world"],
+    ...         'tabular': np.array([[1, 2], [3, 4]])}
     >>> embeddings = encoder.encode(data)
     >>> embeddings.shape[0]
     2
@@ -231,8 +232,11 @@ class MultiModalEncoder(BaseEncoder):
 
                 # Impute missing with training mean or zeros
                 n_total = len(modality_data)
-                fill = self.means_.get(name, np.zeros(present_emb.shape[1])) \
-                    if hasattr(self, 'means_') else np.zeros(present_emb.shape[1])
+                fill = (
+                    self.means_.get(name, np.zeros(present_emb.shape[1]))
+                    if hasattr(self, 'means_')
+                    else np.zeros(present_emb.shape[1])
+                )
                 emb = np.tile(fill, (n_total, 1))
                 for j, idx in enumerate(present_idx):
                     emb[idx] = present_emb[j]
@@ -355,6 +359,18 @@ def resolve_encoder(encoder):
     """
     if isinstance(encoder, BaseEncoder):
         return encoder
+
+    # Pre-instantiated SentenceTransformer: must come before callable check
+    # because SentenceTransformer is callable and would silently fall through
+    # to CallableEncoder (calling encoder(X) instead of encoder.encode(X)).
+    try:
+        from sentence_transformers import SentenceTransformer as _ST
+        if isinstance(encoder, _ST):
+            from pyod.utils.encoders.sentence_transformer import (
+                SentenceTransformerEncoder)
+            return SentenceTransformerEncoder(model_name=encoder)
+    except ImportError:
+        pass
 
     if callable(encoder) and not isinstance(encoder, str):
         return CallableEncoder(encoder)
