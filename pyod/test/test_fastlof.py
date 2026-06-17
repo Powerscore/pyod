@@ -58,6 +58,9 @@ class TestFastLOF(unittest.TestCase):
         pred_scores = self.clf.decision_function(self.X_test)
         assert_equal(len(pred_scores), self.X_test.shape[0])
 
+        # check performance
+        assert (roc_auc_score(self.y_test, pred_scores) >= self.roc_floor)
+
     def test_prediction_labels(self):
         """Test prediction labels."""
         pred_labels = self.clf.predict(self.X_test)
@@ -122,6 +125,14 @@ class TestFastLOF(unittest.TestCase):
         clf = FastLOF(n_neighbors=300)
         clf.fit(self.X_train)
         assert clf.n_neighbors_ == self.n_train - 1
+
+    def test_decision_function_large_n_neighbors(self):
+        """Test decision_function when n_neighbors > n_samples (clamped)."""
+        clf = FastLOF(n_neighbors=300, contamination=self.contamination)
+        clf.fit(self.X_train)
+        assert clf.n_neighbors_ == self.n_train - 1
+        pred_scores = clf.decision_function(self.X_test)
+        assert_equal(len(pred_scores), self.X_test.shape[0])
 
     def test_algorithm_validation(self):
         """Test that invalid algorithm raises error."""

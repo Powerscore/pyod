@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Fast Local Outlier Factor (FastLOF) for Outlier Detection
 """
-# Author: Markus Goldstein, Alaa Abdelwahab
+# Author: Alaa Abdelwahab
 # License: BSD 2 clause
 
 import math
@@ -138,7 +138,7 @@ class FastLOF(BaseDetector):
     scores more efficiently than standard LOF for large datasets. It divides
     the dataset into chunks and computes nearest neighbors incrementally,
     with optional threshold-based filtering to focus computation on likely outliers.
-    See :cite:`breunig2000lof,goldstein2016comparative` for details.
+    See :cite:`breunig2000lof,goldstein2012fastlof` for details.
 
     Parameters
     ----------
@@ -572,7 +572,7 @@ class FastLOF(BaseDetector):
         """
         # Lazy initialization: Initialize the neighbor searcher only if needed
         if not hasattr(self, 'nbrs_'):
-            self.nbrs_ = NearestNeighbors(n_neighbors=self.n_neighbors,
+            self.nbrs_ = NearestNeighbors(n_neighbors=self.n_neighbors_,
                                           algorithm=self.algorithm,
                                           metric=self.metric,
                                           p=self.p,

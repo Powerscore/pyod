@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Example of using FastLOF for outlier detection
 """
-# Author: Prof. Markus Goldstein 
+# Author: Alaa Abdelwahab
 # License: BSD 2 clause
 
 from __future__ import division
