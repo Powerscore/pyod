@@ -74,7 +74,7 @@ Pillar                       What it means
 Multi-Modal                  61 detectors across **tabular, time series, graph, text, image, and audio** data, one API
 Full Lifecycle               From raw data to explained anomalies and next-step guidance in a single call
 Agentic                      Ask in plain English, and AI agents run the full detection workflow without OD expertise
-Most Used                    `38+ million downloads <https://pepy.tech/project/pyod>`_; benchmark-backed routing (ADBench, TSB-AD, BOND, NLP-ADBench)
+Most Used                    `46+ million downloads <https://pepy.tech/project/pyod>`_; benchmark-backed routing (ADBench, TSB-AD, BOND, NLP-ADBench)
 ===========================  ========================================================================================
 
 Install
@@ -155,7 +155,7 @@ See the Install block above for setup instructions for all three activation path
 About PyOD
 ^^^^^^^^^^
 
-PyOD, established in 2017, is the longest-running and most widely used Python library for `anomaly detection <https://en.wikipedia.org/wiki/Anomaly_detection>`_. With `38+ million downloads <https://pepy.tech/project/pyod>`_, it serves both academic research and commercial products worldwide.
+PyOD, established in 2017, is the longest-running and most widely used Python library for `anomaly detection <https://en.wikipedia.org/wiki/Anomaly_detection>`_. With `46+ million downloads <https://pepy.tech/project/pyod>`_, it serves both academic research and commercial products worldwide.
 
 V3 extends the library with :class:`~pyod.utils.ad_engine.ADEngine` (lifecycle orchestration) and the ``od-expert`` skill (agentic workflow), while keeping the classic ``fit``/``predict`` API fully backward-compatible. V3 is built on SUOD :cite:`a-zhao2021suod` for fast parallel training and numba JIT for per-model speedups.
 
